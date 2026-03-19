@@ -65,7 +65,15 @@ const resumir = [...vendas].map(venda => ({
     }));
 
 
+const totalCategoria = vendas.reduce((acumulador, venda) => ({
+    ...acumulador,
+    [venda.categoria]: Number(((acumulador[venda.categoria] || 0) + venda.valor))
+}), {});
+
+const ordemValor = [...vendas].sort((a, b) => b.valor - a.valor);
+
 ```
 
 Resposta 1:
+
 Resposta 2:
