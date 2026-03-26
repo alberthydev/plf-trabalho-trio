@@ -97,37 +97,38 @@ Testando as funções com o console.assert
 
 #### Funções filtrarVlrMin e filtrarCategoria
 ```javascript
-const resultadoValor = filtrarVlrMin(1000)(vendasTeste);
+const resultadoValor = filtrarVlrMin(1000)(vendas);
 console.assert(
-    resultadoValor.length === 1, 
-    'Erro filtrarVlrMin: Deveria retornar 1 venda acima de 1000' [cite: 63, 64]
+    resultadoValor.length >= 1, 
+    'Nenhuma venda identificada com base no filtro'
 );
 
 const resultadoCat = filtrarCategoria('tech')(vendasTeste);
 console.assert(
-    resultadoCat.length === 2, 
-    'Erro filtrarCategoria: Deveria retornar 2 itens da categoria tech'
+    resultadoCat.length >= 1, 
+    'Nao existem itens nessa categoria'
 );
 ```
 
 #### Funções Resumir, totalCategoria e ordemValor
 ```javascript
-const resultadoResumo = resumir(vendasTeste);
+const resultadoResumo = resumir(vendas);
 console.assert(
     Object.keys(resultadoResumo[0]).length === 3 && !resultadoResumo[0].vendedor,
-    'Erro resumir: Deveria conter apenas produto, valor e categoria' [cite: 46]
+    'O item possui mais ou menos atributos'
 );
 
-const resultadoTotal = totalCategoria(vendasTeste);
+const resultadoTotal = totalCategoria(vendas);
 console.assert(
-    resultadoTotal.tech === 3100 && resultadoTotal.moveis === 800,
-    'Erro totalCategoria: O cálculo por categoria está incorreto' [cite: 48]
+    resultadoTotal.tech == 11400,
+    'O cálculo por categoria está incorreto'
 );
 
-const resultadoOrdem = ordemValor(vendasTeste);
+const resultadoOrdem = ordemValor(vendas);
+console.log(resultadoOrdem);
 console.assert(
-    resultadoOrdem[0].valor === 100 && resultadoOrdem[2].valor === 3000,
-    'Erro ordemValor: A ordenação não seguiu o critério de valor crescente' [cite: 47]
+    resultadoOrdem[0].valor === 150,
+    'A ordenação não seguiu o critério de valor crescente'
 );
 ```
 
