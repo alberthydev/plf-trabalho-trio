@@ -287,4 +287,4 @@ Estes estados são como um pacote, onde passa um cabeçalho para a próxima fun�
 
 Pagina criada para exibir os dados filtrados por categoria
 
-[Pagina Web](https://alberthydev.github.io/plf-trabalho-trio/)
+[Pagina Web](https://alberthydev.github.io/plf-trabalho-trio/){:target="_blank"}
