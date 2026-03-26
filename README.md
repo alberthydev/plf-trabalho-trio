@@ -283,3 +283,6 @@ Por conceito, o Maybe monad possui dois estados:
  
 Estes estados são como um pacote, onde passa um cabeçalho para a próxima função. Se houver um valor “normal”, será executado com o valor em seu interior. Se o dado for anômalo, a função será ignorada, o estado transmitido ao restante do pipeline que “desliga” o seu processamento.
 
+# Ponto Extra
+
+[Pagina Web](https://alberthydev.github.io/plf-trabalho-trio/)
