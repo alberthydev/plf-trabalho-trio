@@ -103,7 +103,7 @@ console.assert(
     'Nenhuma venda identificada com base no filtro'
 );
 
-const resultadoCat = filtrarCategoria('tech')(vendasTeste);
+const resultadoCat = filtrarCategoria('tech')(vendas);
 console.assert(
     resultadoCat.length >= 1, 
     'Nao existem itens nessa categoria'
