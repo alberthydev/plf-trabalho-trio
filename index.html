@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro de Vendas Funcional</title>
+    <style>
+        :root {
+            --bg: #f4f4f9;
+            --card-bg: #ffffff;
+            --primary: #4a90e2;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: auto; }
+        
+        .controls { margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+        button { 
+            padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;
+            background: #ddd; transition: 0.3s; font-weight: bold;
+        }
+        button:hover { background: var(--primary); color: white; }
+        button.active { background: var(--primary); color: white; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 100%)); gap: 15px; }
+        
+        .card { 
+            background: var(--card-bg); padding: 15px; border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 8px solid #ccc;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .card.tech { border-color: #ffabab; }
+        .card.periféricos { border-color: #bffcc6; }
+        .card.áudio { border-color: #3357ff; }
+        .card.monitores { border-color: #97a2ff; }
+        .card.acessórios { border-color: #ffbd33; }
+        .card.armazenamento { border-color: #ff5733; }
+        .card.memória { border-color: #85e3ff; }
+        .card.processadores { border-color: #6eb5ff; }
+        .card.vídeo { border-color: #fff5ba; }
+        .card.cabos { border-color: #b28dff; }
+        .card.tablets { border-color: #ff9cee; }
+        .card.smartphones { border-color: #a79aff; }
+        .card.wearables { border-color: #aff8d8; }
+        .card.fotografia { border-color: #f333ff; }
+        .card.rede { border-color: #e7ffac; }
+        .card.iluminação { border-color: #afcbff; }
+        .card.ergonomia { border-color: #dbffd6; }
+        .card.móveis { border-color: #ff5baf; }
+
+        .info h3 { margin: 0 0 5px 0; font-size: 1.1rem; }
+        .info p { margin: 2px 0; font-size: 0.9rem; color: #666; }
+        .price { font-weight: bold; color: #2c3e50; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dashboard de Vendas</h1>
+    <p>Projeto de Programação Funcional - Filtro por Categorias</p>
+
+    <div id="filter-buttons" class="controls">
+        <button onclick="renderizar(vendasIniciais)" class="active">Mostrar Todos</button>
+    </div>
+
+    <div id="lista-produtos" class="grid">
+        </div>
+</div>
+
+<script>
+    let vendasIniciais = [];
+
+    const filtrarCategoria = (categoria) => {
+        return (vendas) => vendas.filter(venda => venda.categoria === categoria);
+    };
+
+    async function carregarDados() {
+        try {
+            const response = await fetch('produtos.json');
+            vendasIniciais = await response.json();
+            
+            gerarBotoesFiltro(vendasIniciais);
+            renderizar(vendasIniciais);
+        } catch (error) {
+            console.error("Erro ao carregar o JSON. Certifique-se de que o arquivo está no mesmo diretório.", error);
+        }
+    }
+
+    function gerarBotoesFiltro(vendas) {
+        const container = document.getElementById('filter-buttons');
+        
+        const categorias = [...new Set(vendas.map(v => v.categoria))];
+
+        categorias.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.innerText = cat.toUpperCase();
+            btn.onclick = () => {
+                const filtrarPor = filtrarCategoria(cat); 
+                renderizar(filtrarPor(vendas));
+                atualizarBotaoAtivo(btn);
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function renderizar(lista) {
+        const container = document.getElementById('lista-produtos');
+        container.innerHTML = lista.map(item => `
+            <div class="card ${item.categoria}">
+                <div class="info">
+                    <h3>${item.produto}</h3>
+                    <p>Categoria: <strong>${item.categoria}</strong></p>
+                    <p>Vendedor: ${item.vendedor} | Data: ${item.data}</p>
+                </div>
+                <div class="price">R$ ${item.valor}</div>
+            </div>
+        `).join('');
+    }
+
+    function atualizarBotaoAtivo(btnAtivo) {
+        document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btnAtivo.classList.add('active');
+    }
+
+    carregarDados();
+</script>
+
+</body>
+</html>
